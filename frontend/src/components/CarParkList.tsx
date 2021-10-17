@@ -26,10 +26,17 @@ const CarParkList: React.FC = () => {
     }
   }, [carParksQuery])
 
-  return <div>
+  return <div className="m-4 bg-white border border-gray-400 rounded flex flex-col divide-y divide-gray-300">
     {carParksToShow.map((item: CarParkEntry) => (
-      <article key={item.carParkId}>
-        {item.name}, {item.spacesAvailable}/{item.maxCapacity || '?'}
+      <article key={item.carParkId} className="py-2 px-4 flex justify-between">
+        <div>
+          {item.name}
+        </div>
+        <div>
+          <span className="text-xs bg-blue-200 rounded-full py-1 px-2">
+            <strong>{item.spacesAvailable}</strong> <span className="text-blue-500">/ {item.maxCapacity || '?'}</span>
+          </span>
+        </div>
       </article>
     ))}
   </div>
