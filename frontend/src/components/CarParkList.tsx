@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { ALL_CARPARKS } from '../queries/carParks'
+import { useQuery } from '@apollo/client'
 
 interface CarParkEntry {
   carParkId: string,
@@ -9,22 +11,23 @@ interface CarParkEntry {
   spacesAvailable?: number,
 }
 
-const testData: CarParkEntry[] = [
-  {
-    carParkId: '123',
-    name: 'Testipaikka',
-    lat: 0,
-    lon: 0,
-    maxCapacity: 10,
-    spacesAvailable: 6,
-  }
-];
-
 const CarParkList: React.FC = () => {
-  const [carParks, setCarParks] = useState<CarParkEntry[]>(testData);
+  const [carParks, setCarParks] = useState<CarParkEntry[]>([]);
+  const carParksQuery = useQuery(ALL_CARPARKS)
+  const carParksValid = carParks.filter((item) => {
+    return item.spacesAvailable !== null
+  })
+
+  const carParksToShow = carParksValid;
+
+  useEffect(() => {
+    if (carParksQuery.data) {
+      setCarParks(carParksQuery.data.carParks)
+    }
+  }, [carParksQuery])
 
   return <div>
-    {carParks.map((item: CarParkEntry) => (
+    {carParksToShow.map((item: CarParkEntry) => (
       <article key={item.carParkId}>
         {item.name}, {item.spacesAvailable}/{item.maxCapacity || '?'}
       </article>
