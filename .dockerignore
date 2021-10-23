@@ -3,4 +3,4 @@
 node_modules
 Dockerfile
 /backend/build
-/frontend
+/frontend/build
