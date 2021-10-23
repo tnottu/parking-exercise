@@ -9,7 +9,7 @@ import {
 } from '@apollo/client'
 
 // const apiUrl: string = 'https://api.oulunliikenne.fi/proxy/graphql'
-const apiUrl: string = 'http://localhost:4000/'
+const apiUrl: string = 'http://localhost:4000/graphql'
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({

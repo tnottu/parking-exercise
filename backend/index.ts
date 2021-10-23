@@ -1,6 +1,12 @@
-const { ApolloServer, gql } = require('apollo-server')
+const { ApolloServer } = require('apollo-server-express');
+const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
+const express = require('express');
+const cors = require('cors');
+const http = require('http');
+const { gql } = require('apollo-server-express');
+const oukaMiddleman = require('./services/ouka-middleman')
 
-const carParksMockData = [
+const _carParksMockData = [
   {
     carParkId: '3d599470',
     name: 'Testiparkki',
@@ -31,6 +37,7 @@ const typeDefs = gql`
     spacesAvailable: Int
     realtime: Boolean
     pricing: [CarParkPriceListItem]
+    testKey: String!
     lon: Float
     lat: Float
   }
@@ -54,15 +61,38 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    carParks: () => carParksMockData,
+    carParks: async (_parent:any, _args:any, _context:any) => {
+      const response = await oukaMiddleman.query(_context.req)
+      // return _carParksMockData
+      return response.data.carParks
+    },
   }
 }
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-})
+async function startApolloServer(typeDefs: any, resolvers: any) {
+  const app = express();
+  const httpServer = http.createServer(app);
 
-server.listen().then(({ url }:any) => {
-  console.log(`Server ready at ${url}`)
-})
+  app.use(cors({
+    origin: true,
+    credentials: true,
+  }));
+
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    context: ({ req }:any) => ({
+      req,
+    })
+  });
+
+  await server.start();
+  server.applyMiddleware({ app });
+  await new Promise<void>(resolve => httpServer.listen({ port: 4000 }, resolve));
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+
+  return { server, app };
+}
+
+startApolloServer(typeDefs, resolvers)
