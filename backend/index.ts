@@ -6,7 +6,7 @@ const http = require('http');
 const carParksSchema = require('./schemas/carParks')
 const PORT = process.env.PORT || 4000
 
-async function startApolloServer(typeDefs: any, resolvers: any) {
+async function startApolloServer(typeDefs, resolvers) {
   const app = express();
   const httpServer = http.createServer(app);
 
@@ -17,7 +17,7 @@ async function startApolloServer(typeDefs: any, resolvers: any) {
     typeDefs,
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-    context: ({ req }:any) => ({
+    context: ({ req }) => ({
       req,
     })
   });

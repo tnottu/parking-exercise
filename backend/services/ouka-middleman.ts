@@ -20,7 +20,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const query = async (req:any) => {
+const query = async (req) => {
   if (!req.body || !req.body.query) {
     throw new ValidationError('Request does not contain a query')
   }
@@ -32,7 +32,7 @@ const query = async (req:any) => {
       query,
     });
     return result
-  } catch (err:any) {
+  } catch (err) {
     throw new MiddleManError('Query failed')
   }
 };

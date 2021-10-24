@@ -33,8 +33,8 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    carParks: async (_parent:any, _args:any, _context:any) => {
-      const response = await oukaMiddleman.query(_context.req)
+    carParks: async (_parent, _args, context) => {
+      const response = await oukaMiddleman.query(context.req)
       return response.data.carParks
     },
   }
