@@ -39,7 +39,7 @@ function App() {
   return (
     <div className="App">
       <div className="TopBar row-start-1 bg-white p-4 shadow-md border-b border-gray-400 z-20">
-        <h1 className="text-lg font-bold">Ouka Available Parking</h1>
+        <h1 className="text-lg font-bold">Oulu Carparks Availability</h1>
       </div>
       <div className="row-start-3 lg:row-start-2">
         <CarParkList carParks={carParksToShow} />
