@@ -17,8 +17,17 @@ const CarParkList: React.FC = () => {
   const carParksValid = carParks.filter((item) => {
     return item.spacesAvailable !== null
   })
+  const carParksUnique = carParksValid
+    .filter((item, index, array) => {
+      return array.findIndex(it => it.name === item.name) === index
+    });
+  const carParksSorted = carParksUnique.sort((a, b) => {
+    if ( Number(a.spacesAvailable) < Number(b.spacesAvailable) ) return 1
+    if ( Number(a.spacesAvailable) > Number(b.spacesAvailable) ) return -1
+    return 0
+  })
 
-  const carParksToShow = carParksValid;
+  const carParksToShow = carParksSorted;
 
   useEffect(() => {
     if (carParksQuery.data) {
