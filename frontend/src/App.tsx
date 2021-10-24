@@ -5,10 +5,7 @@ import './App.css';
 import CarParkList from './components/CarParkList/CarParkList';
 import CarParkMap from './components/CarParkMap/CarParkMap';
 
-function App() {
-
-  const [carParks, setCarParks] = useState<CarParkEntry[]>([]);
-  const carParksQuery = useQuery(ALL_CARPARKS)
+const prepareCarParks = (carParks:CarParkEntry[]): CarParkEntry[] => {
   const carParksValid = carParks.filter((item) => {
     return item.spacesAvailable !== null
   })
@@ -23,6 +20,15 @@ function App() {
   })
 
   const carParksToShow = carParksSorted;
+
+  return carParksToShow
+}
+
+function App() {
+
+  const [carParks, setCarParks] = useState<CarParkEntry[]>([]);
+  const carParksQuery = useQuery(ALL_CARPARKS)
+  const carParksToShow = prepareCarParks(carParks)
 
   useEffect(() => {
     if (carParksQuery.data) {
