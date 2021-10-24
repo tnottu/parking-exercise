@@ -27,7 +27,6 @@ const typeDefs = gql`
 
   type Query {
     carParks: [CarPark!]!
-    findCarPark(id: ID!): CarPark
   }
 `
 
