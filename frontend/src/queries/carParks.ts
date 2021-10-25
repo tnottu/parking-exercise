@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { gql } from '@apollo/client';
 
 export const ALL_CARPARKS = gql`
   query getAllCarParks {
@@ -11,4 +11,4 @@ export const ALL_CARPARKS = gql`
       spacesAvailable
     }
   }
-`
+`;

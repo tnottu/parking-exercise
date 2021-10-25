@@ -1,5 +1,5 @@
 const { gql } = require('apollo-server-express');
-const oukaMiddleman = require('../services/ouka-middleman')
+const oukaMiddleman = require('../services/ouka-middleman');
 
 const typeDefs = gql`
   type CarPark {
@@ -28,18 +28,18 @@ const typeDefs = gql`
   type Query {
     carParks: [CarPark!]!
   }
-`
+`;
 
 const resolvers = {
   Query: {
     carParks: async (_parent, _args, context) => {
-      const response = await oukaMiddleman.query(context.req)
-      return response.data.carParks
+      const response = await oukaMiddleman.query(context.req);
+      return response.data.carParks;
     },
-  }
-}
+  },
+};
 
 module.exports = {
   typeDefs,
   resolvers,
-}
+};

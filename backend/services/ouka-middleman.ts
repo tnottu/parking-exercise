@@ -7,8 +7,8 @@ const { ValidationError, ApolloError } = require('apollo-server-errors');
 
 class MiddleManError extends ApolloError {
   constructor(message: string) {
-    super(message, 'APOLLO_MIDDLEMAN_ERROR')
-    Object.defineProperty(this, 'name', { value: 'MiddleManError' })
+    super(message, 'APOLLO_MIDDLEMAN_ERROR');
+    Object.defineProperty(this, 'name', { value: 'MiddleManError' });
   }
 }
 
@@ -22,7 +22,7 @@ const client = new ApolloClient({
 
 const query = async (req) => {
   if (!req.body || !req.body.query) {
-    throw new ValidationError('Request does not contain a query')
+    throw new ValidationError('Request does not contain a query');
   }
 
   const query = gqlTag(req.body.query);
@@ -31,12 +31,12 @@ const query = async (req) => {
     const result = await client.query({
       query,
     });
-    return result
+    return result;
   } catch (err) {
-    throw new MiddleManError('Query failed')
+    throw new MiddleManError('Query failed');
   }
 };
 
 module.exports = {
   query,
-}
+};

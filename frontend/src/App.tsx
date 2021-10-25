@@ -1,40 +1,38 @@
-import React, { useState, useEffect } from 'react'
-import { ALL_CARPARKS } from './queries/carParks'
-import { useQuery } from '@apollo/client'
+import React, { useState, useEffect } from 'react';
+import { ALL_CARPARKS } from './queries/carParks';
+import { useQuery } from '@apollo/client';
 import './App.css';
 import CarParkList from './components/CarParkList/CarParkList';
 import CarParkMap from './components/CarParkMap/CarParkMap';
 
-const prepareCarParks = (carParks:CarParkEntry[]): CarParkEntry[] => {
+const prepareCarParks = (carParks: CarParkEntry[]): CarParkEntry[] => {
   const carParksValid = carParks.filter((item) => {
-    return item.spacesAvailable !== null
-  })
-  const carParksUnique = carParksValid
-    .filter((item, index, array) => {
-      return array.findIndex(it => it.name === item.name) === index
-    });
+    return item.spacesAvailable !== null;
+  });
+  const carParksUnique = carParksValid.filter((item, index, array) => {
+    return array.findIndex((it) => it.name === item.name) === index;
+  });
   const carParksSorted = carParksUnique.sort((a, b) => {
-    if ( Number(a.spacesAvailable) < Number(b.spacesAvailable) ) return 1
-    if ( Number(a.spacesAvailable) > Number(b.spacesAvailable) ) return -1
-    return 0
-  })
+    if (Number(a.spacesAvailable) < Number(b.spacesAvailable)) return 1;
+    if (Number(a.spacesAvailable) > Number(b.spacesAvailable)) return -1;
+    return 0;
+  });
 
   const carParksToShow = carParksSorted;
 
-  return carParksToShow
-}
+  return carParksToShow;
+};
 
 function App() {
-
   const [carParks, setCarParks] = useState<CarParkEntry[]>([]);
-  const carParksQuery = useQuery(ALL_CARPARKS)
-  const carParksToShow = prepareCarParks(carParks)
+  const carParksQuery = useQuery(ALL_CARPARKS);
+  const carParksToShow = prepareCarParks(carParks);
 
   useEffect(() => {
     if (carParksQuery.data) {
-      setCarParks(carParksQuery.data.carParks)
+      setCarParks(carParksQuery.data.carParks);
     }
-  }, [carParksQuery])
+  }, [carParksQuery]);
 
   return (
     <div className="App">

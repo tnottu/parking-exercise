@@ -1,13 +1,10 @@
 module.exports = {
   style: {
     postcss: {
-      plugins: [
-        require('tailwindcss'),
-        require('autoprefixer'),
-      ],
+      plugins: [require('tailwindcss'), require('autoprefixer')],
     },
   },
   babel: {
-    plugins: ["@babel/plugin-proposal-nullish-coalescing-operator"],
+    plugins: ['@babel/plugin-proposal-nullish-coalescing-operator'],
   },
-}
+};

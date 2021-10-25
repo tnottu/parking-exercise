@@ -5,15 +5,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import {
-  ApolloClient, ApolloProvider, HttpLink, InMemoryCache
-} from '@apollo/client'
+  ApolloClient,
+  ApolloProvider,
+  HttpLink,
+  InMemoryCache,
+} from '@apollo/client';
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
     uri: '/graphql',
-  })
-})
+  }),
+});
 
 ReactDOM.render(
   <React.StrictMode>
