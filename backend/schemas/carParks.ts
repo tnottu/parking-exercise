@@ -1,5 +1,5 @@
-const { gql } = require('apollo-server-express');
-const oukaMiddleman = require('../services/ouka-middleman');
+import { gql } from 'apollo-server-express';
+import oukaMiddleman from '../services/ouka-middleman';
 
 const typeDefs = gql`
   type CarPark {
@@ -39,7 +39,9 @@ const resolvers = {
   },
 };
 
-module.exports = {
+const exp = {
   typeDefs,
   resolvers,
 };
+
+export default exp;

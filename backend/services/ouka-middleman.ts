@@ -1,9 +1,9 @@
-const gqlTag = require('graphql-tag');
-const nodeFetch = require('node-fetch-commonjs');
-const { ApolloClient } = require('apollo-client');
-const { createHttpLink } = require('apollo-link-http');
-const { InMemoryCache } = require('apollo-cache-inmemory');
-const { ValidationError, ApolloError } = require('apollo-server-errors');
+import { gql } from 'apollo-server-express';
+import fetch from 'cross-fetch';
+import { ApolloClient } from 'apollo-client';
+import { createHttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ValidationError, ApolloError } from 'apollo-server-errors';
 
 class MiddleManError extends ApolloError {
   constructor(message: string) {
@@ -15,7 +15,7 @@ class MiddleManError extends ApolloError {
 const client = new ApolloClient({
   link: createHttpLink({
     uri: 'https://api.oulunliikenne.fi/proxy/graphql',
-    fetch: nodeFetch,
+    fetch,
   }),
   cache: new InMemoryCache(),
 });
@@ -25,7 +25,7 @@ const query = async (req) => {
     throw new ValidationError('Request does not contain a query');
   }
 
-  const query = gqlTag(req.body.query);
+  const query = gql(req.body.query);
 
   try {
     const result = await client.query({
@@ -37,6 +37,8 @@ const query = async (req) => {
   }
 };
 
-module.exports = {
+const exp = {
   query,
 };
+
+export default exp;

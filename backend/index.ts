@@ -1,9 +1,9 @@
-const { ApolloServer } = require('apollo-server-express');
-const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
-const express = require('express');
-const cors = require('cors');
-const http = require('http');
-const carParksSchema = require('./schemas/carParks');
+import { ApolloServer } from 'apollo-server-express';
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
+import express from 'express';
+import cors from 'cors';
+import http from 'http';
+import carParksSchema from './schemas/carParks';
 const PORT = process.env.PORT || 4000;
 
 async function startApolloServer(typeDefs, resolvers) {
