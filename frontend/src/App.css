@@ -1,4 +1,4 @@
 .App {
   @apply grid lg:grid-cols-2 grid-flow-row-dense;
-  grid-template-rows: minmax(0, auto) auto;
+  grid-template-rows: min-content 1fr;
 }
