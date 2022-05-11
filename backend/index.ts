@@ -33,4 +33,4 @@ async function startApolloServer(typeDefs, resolvers) {
   return { server, app };
 }
 
-startApolloServer(carParksSchema.typeDefs, carParksSchema.resolvers);
+void startApolloServer(carParksSchema.typeDefs, carParksSchema.resolvers);
